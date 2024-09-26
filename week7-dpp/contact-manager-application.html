@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Manager</title>
+</head>
+<body>
+    <h1>Contact Manager</h1>
+
+    <script>
+        // Global array to store contacts
+        let contacts = [];
+
+        // Function to add a contact
+        function addContact(name, phone) {
+            contacts.push({ name: name, phone: phone });
+            console.log(`Contact added: ${name} - ${phone}`);
+        }
+
+        // Function to delete a contact
+        function deleteContact(name) {
+            const originalLength = contacts.length;
+            contacts = contacts.filter(contact => contact.name !== name);
+
+            if (contacts.length < originalLength) {
+                console.log(`Contact deleted: ${name}`);
+            } else {
+                console.log(`Contact not found: ${name}`);
+            }
+        }
+
+        // Function to display all contacts
+        function displayContacts() {
+            console.log("Current Contacts:");
+            contacts.forEach((contact, index) => {
+                console.log(`${index + 1}. ${contact.name}: ${contact.phone}`);
+            });
+        }
+
+        // Function with arbitrary number of parameters
+        function addMultipleContacts(...newContacts) {
+            newContacts.forEach(contact => {
+                addContact(contact.name, contact.phone);
+            });
+        }
+
+        // Function that returns a value
+        function findContact(name) {
+            const contact = contacts.find(contact => contact.name === name);
+            return contact ? contact : null;
+        }
+
+        // Function expression
+        const updateContact = function(name, newPhone) {
+            const contact = contacts.find(contact => contact.name === name);
+            if (contact) {
+                contact.phone = newPhone;
+                console.log(`Updated ${name}'s phone to ${newPhone}`);
+            } else {
+                console.log(`Contact not found: ${name}`);
+            }
+        };
+
+        // Arrow function
+        const countContacts = () => contacts.length;
+
+        // Example usage
+        addContact("Alice", "123-456-7890");
+        addContact("Bob", "987-654-3210");
+        displayContacts();
+
+        deleteContact("Alice");
+        displayContacts();
+
+        addMultipleContacts(
+            { name: "Charlie", phone: "111-222-3333" },
+            { name: "David", phone: "444-555-6666" }
+        );
+        displayContacts();
+
+        let foundContact = findContact("Bob");
+        console.log("Found contact:", foundContact);
+
+        updateContact("Charlie", "999-888-7777");
+        displayContacts();
+
+        console.log("Total contacts:", countContacts());
+    </script>
+</body>
+</html>

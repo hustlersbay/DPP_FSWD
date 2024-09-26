@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library Book Tracker</title>
+</head>
+<body>
+    <h1>Library Book Tracker</h1>
+
+    <script>
+        let books = [];
+        let statuses = [];
+        
+        let numberOfBooks = prompt("How many books do you want to add to the library?");
+        numberOfBooks = Number(numberOfBooks);
+        
+        for (let i = 0; i < numberOfBooks; i++) {
+            let bookTitle = prompt("Enter the name of book " + (i + 1) + ":");
+            books[i] = bookTitle;
+            statuses[i] = "In Stock";
+        }
+
+        console.log("Initial Library Book List:");
+        for (let i = 0; i < numberOfBooks; i++) {
+            console.log(books[i] + ": " + statuses[i]);
+        }
+
+        let action = prompt("Would you like to borrow or return a book? (Type 'borrow', 'return', or 'exit')");
+
+        while (action !== "exit") {
+            let bookTitle = prompt("Enter the name of the book:");
+            let found = false;
+
+            for (let i = 0; i < numberOfBooks; i++) {
+                if (books[i] === bookTitle) {
+                    found = true;
+                    if (action === "borrow" && statuses[i] === "In Stock") {
+                        statuses[i] = "Checked Out";
+                        console.log(`Success! "${bookTitle}" has been borrowed.`);
+                    } else if (action === "return" && statuses[i] === "Checked Out") {
+                        statuses[i] = "In Stock";
+                        console.log(`Success! "${bookTitle}" has been returned.`);
+                    } else {
+                        console.log(`Error: Either the action is invalid, or the book "${bookTitle}" is already in the desired state.`);
+                    }
+                    break;
+                }
+            }
+
+            if (!found) {
+                console.log(`Sorry, the book titled "${bookTitle}" was not found in our inventory.`);
+            }
+
+            console.log("Updated Library Book List:");
+            for (let i = 0; i < numberOfBooks; i++) {
+                console.log(books[i] + ": " + statuses[i]);
+            }
+
+            action = prompt("Would you like to borrow or return another book? (Type 'borrow', 'return', or 'exit')");
+        }
+
+        let index = 0;
+        console.log("Final Library Book List:");
+        do {
+            console.log(books[index] + ": " + statuses[index]);
+            index++;
+        } while (index < numberOfBooks);
+    </script>
+</body>
+</html>
